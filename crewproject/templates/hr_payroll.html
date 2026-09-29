@@ -1,0 +1,425 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Payroll</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+
+        /* Main content */
+
+        .main-content {
+            margin-left: 278px;
+            padding: 40px;
+        }
+
+
+        /* Header */
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 500;
+            color: #111827;
+        }
+
+        .page-header p {
+            margin-top: 8px;
+            color: #64748b;
+            font-size: 16px;
+        }
+
+
+        /* Summary */
+
+        .summary {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+
+        .summary-card {
+            background: white;
+            width: 220px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 7px rgba(0,0,0,0.08);
+        }
+
+
+        .summary-card p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+
+        .summary-card h2 {
+            color: #2563eb;
+            font-size: 25px;
+        }
+
+
+        /* Payroll table */
+
+        .table-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 7px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+
+        th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid #dbe2ea;
+            color: #111827;
+            font-size: 14px;
+        }
+
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+            color: #475569;
+        }
+
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+
+        /* Employee */
+
+        .employee-id {
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+
+        .employee-name {
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+
+        /* Salary */
+
+        .salary {
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+
+        /* Status */
+
+        .status {
+            background: #dcfce7;
+            color: #15803d;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+
+        /* View button */
+
+        .view-btn {
+            background: #2563eb;
+            color: white;
+            padding: 7px 13px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+
+        .view-btn:hover {
+            background: #1d4ed8;
+        }
+
+
+        /* Empty data */
+
+        .no-data {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+
+
+        @media(max-width: 800px) {
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .summary {
+                flex-direction: column;
+            }
+
+            .summary-card {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="main-content">
+
+
+    <!-- Page Header -->
+
+    <div class="page-header">
+
+        <h1>Payroll</h1>
+
+        <p>
+            Manage employee salary information
+        </p>
+
+    </div>
+
+
+
+    <!-- Summary -->
+
+    <div class="summary">
+
+
+        <div class="summary-card">
+
+            <p>Total Employees</p>
+
+            <h2>
+                {{ employees|length }}
+            </h2>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <p>Payroll Status</p>
+
+            <h2>
+                Active
+            </h2>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- Payroll Table -->
+
+    <div class="table-container">
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Employee</th>
+
+                    <th>Department</th>
+
+                    <th>Designation</th>
+
+                    <th>Employment Type</th>
+
+                    <th>Salary</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                {% for employee in employees %}
+
+                <tr>
+
+
+                    <!-- Employee -->
+
+                    <td>
+
+                        <div class="employee-id">
+
+                            {{ employee.employee_id }}
+
+                        </div>
+
+                        <div class="employee-name">
+
+                            {{ employee.name }}
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- Department -->
+
+                    <td>
+
+                        {{ employee.department.name }}
+
+                    </td>
+
+
+                    <!-- Designation -->
+
+                    <td>
+
+                        {{ employee.designation.name }}
+
+                    </td>
+
+
+                    <!-- Employment Type -->
+
+                    <td>
+
+                        {{ employee.employment_type }}
+
+                    </td>
+
+
+                    <!-- Salary -->
+
+                    <td class="salary">
+
+                        ₹{{ employee.salary }}
+
+                    </td>
+
+
+                    <!-- Status -->
+
+                    <td>
+
+                        {% if employee.status %}
+
+                            <span class="status">
+                                Active
+                            </span>
+
+                        {% else %}
+
+                            <span>
+                                Inactive
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- Action -->
+
+                    <td>
+
+                        <a href="{% url 'payroll_details' employee.id %}"
+                           class="view-btn">
+
+                            View
+
+                        </a>
+
+                    </td>
+
+
+                </tr>
+
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="7"
+                        class="no-data">
+
+                        No employee payroll data available.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+
+            </tbody>
+
+        </table>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
+{% endblock %}

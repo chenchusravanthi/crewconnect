@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Settings</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+        }
+
+        .settings-box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ddd;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-info h3 {
+            margin-bottom: 5px;
+        }
+
+        .setting-info p {
+            color: #777;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        .logout {
+            background: #dc3545;
+        }
+
+        .logout:hover {
+            background: #b02a37;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Settings</h2>
+
+    <div class="settings-box">
+
+        <!-- Profile -->
+
+        <div class="setting-item">
+
+            <div class="setting-info">
+
+                <h3>Profile</h3>
+
+                <p>
+                    View and manage your profile information.
+                </p>
+
+            </div>
+
+            <a href="{% url 'view_profile' %}" class="btn">
+                View Profile
+            </a>
+
+        </div>
+
+
+        <!-- Change Password -->
+
+        <div class="setting-item">
+
+            <div class="setting-info">
+
+                <h3>Change Password</h3>
+
+                <p>
+                    Update your account password.
+                </p>
+
+            </div>
+
+            <a
+                href="{% url 'change_password' %}"
+                class="btn"
+            >
+                Change Password
+            </a>
+
+        </div>
+
+
+        <!-- Email -->
+
+        <div class="setting-item">
+
+            <div class="setting-info">
+
+                <h3>Email</h3>
+
+                <p>
+                    Your registered email address:
+                    {{ request.user.email }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Logout -->
+
+        <div class="setting-item">
+
+            <div class="setting-info">
+
+                <h3>Logout</h3>
+
+                <p>
+                    Sign out from your account.
+                </p>
+
+            </div>
+
+            <a
+                href="{% url 'logout' %}"
+                class="btn logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

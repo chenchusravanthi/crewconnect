@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            padding: 40px;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-icon {
+            width: 90px;
+            height: 90px;
+            background: #007bff;
+            color: white;
+            border-radius: 50%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .profile-header h2 {
+            margin-top: 15px;
+            color: #333;
+        }
+
+        .profile-header p {
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .profile-details {
+            margin-top: 20px;
+        }
+
+        .profile-row {
+            display: flex;
+            padding: 14px 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            width: 220px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .value {
+            flex: 1;
+            color: #666;
+        }
+
+        .status-active {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-inactive {
+            color: red;
+            font-weight: bold;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            background: #007bff;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        .back-btn {
+            background: #6c757d;
+        }
+
+        .back-btn:hover {
+            background: #545b62;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="profile-container">
+
+    <!-- Profile Header -->
+
+    <div class="profile-header">
+
+        <div class="profile-icon">
+            {{ employee.name|first|upper }}
+        </div>
+
+        <h2>{{ employee.name }}</h2>
+
+        <p>{{ employee.designation.name }}</p>
+
+    </div>
+
+
+    <!-- Employee Details -->
+
+    <div class="profile-details">
+
+        <div class="profile-row">
+            <div class="label">Employee ID</div>
+            <div class="value">
+                {{ employee.employee_id }}
+            </div>
+        </div>
+
+
+        <div class="profile-row">
+            <div class="label">Full Name</div>
+            <div class="value">
+                {{ employee.name }}
+            </div>
+        </div>
+
+
+        <div class="profile-row">
+            <div class="label">Email</div>
+            <div class="value">
+                {{ employee.email }}
+            </div>
+        </div>
+
+
+        <div class="profile-row">
+            <div class="label">Phone</div>
+            <div class="value">
+                {{ employee.phone }}
+            </div>
+        </div>
+
+
+        <div class="profile-row">
+            <div class="label">Department</div>
+            <div class="value">
+                {{ employee.department.name }}
+            </div>
+        </div>
+
+
+        <div class="profile-row">
+            <div class="label">Designation</div>
+            <div class="value">
+                {{ employee.designation.name }}
+            </div>
+        </div>
+
+
+        <div class="profile-row">
+            <div class="label">Joining Date</div>
+            <div class="value">
+                {{ employee.joining_date }}
+            </div>
+        </div>
+
+
+        <div class="profile-row">
+            <div class="label">Employment Type</div>
+            <div class="value">
+                {{ employee.get_employment_type_display }}
+            </div>
+        </div>
+
+
+        <div class="profile-row">
+            <div class="label">Salary</div>
+            <div class="value">
+                ₹ {{ employee.salary }}
+            </div>
+        </div>
+
+
+        <div class="profile-row">
+            <div class="label">Address</div>
+            <div class="value">
+                {{ employee.address }}
+            </div>
+        </div>
+
+
+        <div class="profile-row">
+
+            <div class="label">Status</div>
+
+            <div class="value">
+
+                {% if employee.status %}
+
+                    <span class="status-active">
+                        Active
+                    </span>
+
+                {% else %}
+
+                    <span class="status-inactive">
+                        Inactive
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Buttons -->
+
+    <div class="buttons">
+
+        <a href="{% url 'settings' %}" class="btn back-btn">
+            Back to Settings
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,166 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+    #calendar {
+        min-height: 600px;
+    }
+
+    .fc {
+        font-family: Arial, sans-serif;
+    }
+
+    .fc-toolbar-title {
+        font-size: 22px !important;
+    }
+
+    .fc-button {
+        border-radius: 5px !important;
+    }
+
+    .calendar-card {
+        border-radius: 10px;
+    }
+
+</style>
+
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2>Leave Calendar</h2>
+
+            <p class="text-muted">
+                View your leave applications
+            </p>
+        </div>
+
+        <a href="{% url 'apply_leave' %}"
+           class="btn btn-primary">
+            Apply Leave
+        </a>
+
+    </div>
+
+
+    <!-- Calendar Card -->
+    <div class="card shadow-sm calendar-card">
+
+        <div class="card-body">
+
+            <div id="calendar"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FullCalendar CSS -->
+<link
+    href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css"
+    rel="stylesheet"
+>
+
+
+<!-- FullCalendar JavaScript -->
+<script
+    src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js">
+</script>
+
+
+<!-- Leave data from Django -->
+{{ events|json_script:"leave-data" }}
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    /* Get calendar element */
+    const calendarElement =
+        document.getElementById('calendar');
+
+
+    /* Get leave data from Django */
+    const leaveData = JSON.parse(
+        document.getElementById('leave-data').textContent
+    );
+
+
+    /* Create calendar */
+    const calendar = new FullCalendar.Calendar(
+        calendarElement,
+        {
+
+            /* Default view */
+            initialView: 'dayGridMonth',
+
+
+            /* Calendar header */
+            headerToolbar: {
+
+                left: 'prev,next today',
+
+                center: 'title',
+
+                right: 'dayGridMonth,timeGridWeek,listMonth'
+
+            },
+
+
+            /* Calendar height */
+            height: 'auto',
+
+
+            /* Display employee leaves */
+            events: leaveData,
+
+
+            /* When employee clicks a leave */
+            eventClick: function (info) {
+
+                const status =
+                    info.event.extendedProps.status || '';
+
+
+                const reason =
+                    info.event.extendedProps.reason || '';
+
+
+                alert(
+                    'Leave Type: ' +
+                    info.event.title +
+
+                    '\nStart Date: ' +
+                    info.event.start.toLocaleDateString() +
+
+                    '\nStatus: ' +
+                    status +
+
+                    '\nReason: ' +
+                    reason
+                );
+
+            }
+
+        }
+    );
+
+
+    /* Display calendar */
+    calendar.render();
+
+});
+
+</script>
+
+{% endblock %}
+
